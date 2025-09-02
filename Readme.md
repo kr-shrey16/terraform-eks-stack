@@ -3,18 +3,24 @@
 2. Create an EKS cluster with at least 2 nodes in 2 AZs.
 
 terraform workspace list
+
 terraform workspace select dev
+
 terraform init
+
 terrafrom fmt
+
 terraform validate
+
 terraform plan -target=module.vpc -var-file=dev.tfvars
+
 terraform plan -target=module.eks -var-file=dev.tfvars
 
 # switch to k8s-manifests directory and run below command to
 
 1. Deploy 5 demo services (simple apps like nginx or httpbin) to show the cluster is working.
 
-kubectl apply -f .
+   kubectl apply -f .
 
 # switch to istio directory and run below command to
 
