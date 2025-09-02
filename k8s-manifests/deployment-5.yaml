@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ubuntu-dep
+  name: ubuntu-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-dep
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ubuntu-dep
+    spec:
+      containers:
+      - image: ubuntu
+        name: ubuntu
+        command: [ "sleep" ]
+        args: [ "infinity" ]
+        resources: {}
+status: {}

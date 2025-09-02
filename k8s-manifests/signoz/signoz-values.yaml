@@ -1,0 +1,10 @@
+global:
+  storageClass: ebs-gp3-default
+
+clickhouse:
+  installCustomStorageClass: true
+
+presets:
+  logsCollection:
+    enabled: true
+

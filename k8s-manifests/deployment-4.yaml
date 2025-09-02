@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: node-dep
+  name: node-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-dep
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: node-dep
+    spec:
+      containers:
+      - image: node
+        name: node
+        command: ["sleep"]
+        args: ["infinity"]
+        resources: {}
+status: {}

@@ -1,0 +1,4 @@
+elasticsearchRef:
+  name: elasticsearch-master
+  username: elastic
+  password: "<password-here>"

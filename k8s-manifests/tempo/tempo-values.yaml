@@ -1,0 +1,32 @@
+tempo-distributed:
+  enabled: true
+
+# The monolithic chart is disabled to prevent conflicts
+tempo:
+  enabled: false
+
+# Configure object storage to use the S3 bucket
+tempo:
+  querier:
+    search_enabled: true
+  
+  compactor:
+    compaction_interval: 10m
+  
+  storage:
+    trace:
+      backend: s3
+      s3:
+        bucket: "<bucket name>"
+        endpoint: "s3.amazonaws.com"
+        insecure: false
+        region: "us-east-2"
+      wal:
+        backend: local
+        path: /var/tempo/wal
+
+serviceAccount:
+  create: true
+  name: tempo-service-account
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::<account id>:role/TempoS3Role"

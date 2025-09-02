@@ -1,0 +1,14 @@
+datasources:
+  - name: Tempo
+    type: tempo
+    access: proxy
+    uid: tempo
+    orgId: 1
+    url: http://tempo-query-frontend.tempo.svc.cluster.local:3100
+    isDefault: true
+    version: 1
+    editable: true
+
+env:
+  GF_SECURITY_ADMIN_USER: "admin"
+  GF_SECURITY_ADMIN_PASSWORD: "password"
