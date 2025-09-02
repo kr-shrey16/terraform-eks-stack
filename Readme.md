@@ -43,9 +43,7 @@ terraform plan -target=module.eks -var-file=dev.tfvars
 
   helm install istio-ingressgateway istio/gateway \
 --namespace istio-system
-
   kubectl apply -f ingress-gateway.yaml
-
   kubectl apply -f nginx-virtualservice.yaml
   kubectl get svc istio-ingressgateway -n istio-system
 
