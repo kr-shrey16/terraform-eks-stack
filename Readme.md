@@ -42,32 +42,46 @@ terraform plan -target=module.eks -var-file=dev.tfvars
   kubectl get pods -n istio-system
 
   helm install istio-ingressgateway istio/gateway \
---namespace istio-system
+  --namespace istio-system
+  
   kubectl apply -f ingress-gateway.yaml
+  
   kubectl apply -f nginx-virtualservice.yaml
+  
   kubectl get svc istio-ingressgateway -n istio-system
 
 # switch to elastic directory and run below command to
 1. Deploy ELK stack (Elasticsearch + Kibana) for logs.
-helm repo add elastic https://helm.elastic.co
-helm repo update
-helm install elasticsearch elastic/elasticsearch --namespace elk --create-namespace --version 8.13.4 -f elastic-values.yaml
-kubectl get secret elasticsearch-es-elastic-user -o go-template='{{.data.elastic | base64decode}}' --namespace elk
-helm install kibana elastic/kibana --namespace elk --version 8.13.4 -f kibana-values.yaml
-kubectl port-forward service/kibana-kb-http 5601:5601 --namespace elk
+
+  helm repo add elastic https://helm.elastic.co
+
+  helm repo update
+  
+  helm install elasticsearch elastic/elasticsearch --namespace elk --create-namespace --version 8.13.4 -f elastic-values.yaml
+  
+  kubectl get secret elasticsearch-es-elastic-user -o go-template='{{.data.elastic | base64decode}}' --namespace elk
+  
+  helm install kibana elastic/kibana --namespace elk --version 8.13.4 -f kibana-values.yaml
+  
+  kubectl port-forward service/kibana-kb-http 5601:5601 --namespace elk
 
 # now you may login at 127.0.0.1:5601 and access kibana UI
 
 # switch to signoz directory and run below command to
 1. Deploy SigNoz for dashboards/APM.
 
-helm repo add signoz https://charts.signoz.io
-helm repo update
-helm install signoz signoz/signoz \
---namespace platform --create-namespace \
--f signoz-values.yaml
-kubectl -n platform get pods
-export SERVICE_NAME=$(kubectl get svc --namespace platform -l "app.kubernetes.io/component=frontend" -o jsonpath="{.items[0].metadata.name}")
-kubectl --namespace platform port-forward svc/$SERVICE_NAME 3301:3301
+  helm repo add signoz https://charts.signoz.io
+
+  helm repo update
+
+  helm install signoz signoz/signoz \
+  --namespace platform --create-namespace \
+  -f signoz-values.yaml
+  
+  kubectl -n platform get pods
+  
+  export SERVICE_NAME=$(kubectl get svc --namespace platform -l "app.kubernetes.io/component=frontend" -o jsonpath="{.items[0].metadata.name}")
+  
+  kubectl --namespace platform port-forward svc/$SERVICE_NAME 3301:3301
 
 # now you may login at 127.0.0.1:3301 and access Signoz UI
