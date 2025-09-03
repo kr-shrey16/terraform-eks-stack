@@ -1,0 +1,16 @@
+config:
+  filebeat.yml: |
+    filebeat.inputs:
+    - type: container
+      paths:
+      - /var/log/containers/*.log
+      processors:
+      - add_host_metadata: ~
+      - add_kubernetes_metadata:
+          host: ${NODE_NAME}
+          in_cluster: true
+
+output.elasticsearch:
+  hosts: ["${ELASTICSEARCH_HOSTS}"]
+  username: "elastic"
+  password: "YOUR_PASSWORD" # You need to get this from a secret
