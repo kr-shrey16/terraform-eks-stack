@@ -66,6 +66,14 @@ terraform apply -target=module.eks -var-file=dev.tfvars
   kubectl get secret elasticsearch-es-elastic-user -o go-template='{{.data.elastic | base64decode}}' --namespace elk
   
   helm install kibana elastic/kibana --namespace elk --version 8.13.4 -f kibana-values.yaml
+
+  helm install filebeat elastic/filebeat \
+  --namespace elk \
+  --set "daemonset.enabled=true" \
+  --set "podSecurityContext.enabled=true" \
+  --set "podSecurityContext.runAsUser=0" \
+  -f filebeat-values.yaml \
+  --set "output.elasticsearch.hosts[0]=http://elasticsearch-master.logging.svc.cluster.local:9200"
   
   kubectl port-forward service/kibana-kb-http 5601:5601 --namespace elk
 
