@@ -14,7 +14,11 @@ terraform validate
 
 terraform plan -target=module.vpc -var-file=dev.tfvars
 
+terraform apply -target=module.vpc -var-file=dev.tfvars
+
 terraform plan -target=module.eks -var-file=dev.tfvars
+
+terraform apply -target=module.eks -var-file=dev.tfvars
 
 # switch to k8s-manifests directory and run below command to
 
