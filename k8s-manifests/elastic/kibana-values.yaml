@@ -1,4 +1,8 @@
-elasticsearchRef:
-  name: elasticsearch-master
-  username: elastic
-  password: "<password-here>"
+elasticsearchHosts: "https://elasticsearch-master.elastic:9200"
+resources:
+  requests:
+    cpu: "100m"
+    memory: "500Mi"
+  limits:
+    cpu: "500m"
+    memory: "1Gi"
